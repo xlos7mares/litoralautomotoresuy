@@ -4,59 +4,72 @@ import os
 # 1. Configuración de la página
 st.set_page_config(page_title="Litoral Automotores - Catálogo", page_icon="🚗", layout="wide")
 
-# 2. CSS DE PRECISIÓN: Logo completo y sin espacios blancos
+# 2. CSS DE CONTROL TOTAL
 st.markdown("""
     <style>
-    /* Eliminar márgenes de la aplicación */
+    /* Eliminar todos los márgenes internos de Streamlit */
     .block-container {
         padding-top: 0rem !important;
         padding-bottom: 0rem !important;
-        max-width: 95% !important;
+        margin-top: -45px !important;
     }
     
     .stApp { background-color: #f8f9fa; }
 
-    /* Encabezado Azul - Altura aumentada para que el logo respire */
-    .header-container { 
-        display: flex; 
-        align-items: center; 
-        background-color: #1d3557; 
-        color: white; 
-        padding: 40px 50px; 
-        border-radius: 0px 0px 30px 30px;
-        margin-top: -60px !important; /* Sube el bloque al tope del navegador */
-        min-height: 280px; 
+    /* Contenedor del encabezado */
+    .header-box {
+        background-color: #1d3557;
+        color: white;
+        padding: 30px;
+        border-radius: 0px 0px 25px 25px;
+        margin-bottom: 10px !important;
     }
-    
-    /* Logo: Tamaño controlado para que no se corte jamás */
-    .header-logo { flex: 1; max-width: 220px; }
-    .header-logo img { 
-        width: 220px; 
-        height: 220px;
-        object-fit: cover;
-        border-radius: 50%; 
-        border: 4px solid #ffffff;
-        box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
-    }
-    
-    .header-text { flex: 4; padding-left: 40px; }
-    .header-text h1 { font-family: 'Arial Black'; font-size: 3.5em; margin: 0; color: white; line-height: 1; }
-    .header-text p { font-size: 1.3em; color: #a8dadc; margin-top: 15px; line-height: 1.4; }
 
-    /* Tarjetas de autos: Suben para eliminar el espacio blanco */
+    /* Tabla para alinear logo y texto sin errores */
+    .header-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .logo-cell {
+        width: 220px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .logo-cell img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 4px solid white;
+        object-fit: cover;
+    }
+    .text-cell {
+        padding-left: 40px;
+        vertical-align: middle;
+        text-align: left;
+    }
+    .text-cell h1 {
+        font-family: 'Arial Black', sans-serif;
+        font-size: 3.5em;
+        margin: 0;
+        color: white !important;
+    }
+    .text-cell p {
+        font-size: 1.3em;
+        color: #a8dadc;
+        margin: 10px 0 0 0;
+    }
+
+    /* Tarjetas de autos */
     .car-card { 
         background-color: white; 
         padding: 20px; 
         border-radius: 15px; 
         box-shadow: 0px 8px 20px rgba(0,0,0,0.1); 
         text-align: center;
-        margin-top: -40px !important; /* TRUCO: Sube las tarjetas sobre el azul */
-        position: relative;
-        z-index: 10;
         min-height: 750px;
     }
     
-    .badge-venta { background-color: #28a745; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9em; }
+    .badge-venta { background-color: #28a745; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; }
     .price-tag { color: #e63946; font-size: 26px; font-weight: bold; margin: 15px 0px; }
     .btn-ws { display: block; width: 100%; text-align: center; color: white !important; padding: 14px; margin: 8px 0; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: 1.1em; }
     .btn-info { background-color: #007bff; }
@@ -72,16 +85,23 @@ if "foto" in st.query_params:
     st.image(st.query_params["foto"], use_container_width=True)
     st.stop()
 
-# --- ENCABEZADO ---
+# --- ENCABEZADO CON TABLA HTML (No falla) ---
 logo_url = "https://raw.githubusercontent.com/xlos7mares/litoralautomotoresuy/main/601396473_3654982237974663_5290087789832669203_n.jpg"
+
 st.markdown(f"""
-    <div class='header-container'>
-        <div class='header-logo'><img src='{logo_url}'></div>
-        <div class='header-text'>
-            <h1>LITORAL AUTOMOTORES</h1>
-            <p>Comercializamos vehículos de todas las décadas. Especialistas en gestionar <b>CONSIGNACIONES</b> con total transparencia y seguridad.</p>
-            <p>Autos, Camionetas, Motos, Trailers y Casas Rodantes. ¡CONSÚLTENOS!</p>
-        </div>
+    <div class="header-box">
+        <table class="header-table">
+            <tr>
+                <td class="logo-cell">
+                    <img src="{logo_url}">
+                </td>
+                <td class="text-cell">
+                    <h1>LITORAL AUTOMOTORES</h1>
+                    <p>Comercializamos vehículos de todas las décadas. Especialistas en gestionar <b>CONSIGNACIONES</b> con total transparencia.</p>
+                    <p>Autos, Camionetas, Motos, Trailers y Casas Rodantes. ¡CONSÚLTENOS!</p>
+                </td>
+            </tr>
+        </table>
     </div>
     """, unsafe_allow_html=True)
 
