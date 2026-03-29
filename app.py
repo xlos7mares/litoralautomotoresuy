@@ -1,15 +1,16 @@
 import streamlit as st
 import os
 
-# Configuración de la página
-st.set_page_config(page_title="Venta Hyundai Accent 95 - Litoral Automotores", page_icon="🚗")
+# Configuración de la página (Título y icono en el navegador)
+st.set_page_config(page_title="Catálogo - Litoral Automotores", page_icon="🚗")
 
-# Estilo personalizado con CSS
+# Estilo personalizado con CSS para botones profesionales
 st.markdown("""
     <style>
     .main { background-color: #ffffff; }
     .car-title { text-align: center; color: #1d3557; font-family: 'Arial Black'; margin-bottom: 0px; }
     .feature-list { background-color: #f1f4f9; padding: 20px; border-radius: 15px; margin: 10px 0px; }
+    .price-tag { color: #e63946; font-size: 24px; font-weight: bold; text-align: center; }
     .btn-whatsapp {
         display: block; width: 100%; text-align: center; background-color: #e63946;
         color: white !important; padding: 15px; margin: 10px 0; border-radius: 12px;
@@ -19,41 +20,38 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# Título Principal
-st.markdown("<h1 class='car-title'>🚗 HYUNDAI ACCENT 1995</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; font-size: 1.1em; color: gray;'>¡Oportunidad Única - Litoral Automotores!</p>", unsafe_allow_html=True)
+# Encabezado Principal
+st.markdown("<h1 class='car-title'>🚗 NUESTROS VEHÍCULOS DISPONIBLES</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: gray;'>Litoral Automotores - Paysandú, Uruguay</p>", unsafe_allow_html=True)
 
-# BUSCADOR AUTOMÁTICO DE FOTOS
-# Esto evita errores de escritura: busca todos los archivos .jpg en tu repo
-fotos = [f for f in os.listdir('.') if f.endswith('.jpg')]
+# Definimos las pestañas para cada auto
+tab1, tab2 = st.tabs(["🚗 SMA C81 Full (2009)", "🚗 HYUNDAI ACCENT (1995)"])
 
-if fotos:
-    # Mostramos las fotos en una cuadrícula
-    cols = st.columns(2)
-    for i, foto in enumerate(fotos):
-        with cols[i % 2]:
-            st.image(foto, use_container_width=True)
-else:
-    st.warning("No se encontraron fotos en la carpeta del proyecto.")
+# ---------------------------------------------------------
+# PESTAÑA 1: SMA C81 Full
+# ---------------------------------------------------------
+with tab1:
+    st.markdown("<h2 class='car-title'>SMA C81 Full 1.8 (2009)</h2>", unsafe_allow_html=True)
+    st.markdown("<p class='price-tag'>¡Oportunidad! Precio USD 3500.-</p>", unsafe_allow_html=True)
 
-# Características
-st.markdown("<div class='feature-list'>", unsafe_allow_html=True)
-st.subheader("Características del Vehículo")
-st.write("✅ **Motor:** 1.5 Nafta")
-st.write("✅ **Consumo:** ¡Muy económico, ideal para uso diario!")
-st.write("✅ **Documentación:** Títulos y libreta en regla.")
-st.write("📍 **Ubicación:** Paysandú, Uruguay.")
-st.markdown("</div>", unsafe_allow_html=True)
+    # Buscamos las fotos específicas del SMA. Asegúrate de tenerlas en GitHub.
+    # Aquí busco archivos que empiecen con '65' que es el prefijo de tus fotos nuevas.
+    fotos_sma = [f for f in os.listdir('.') if f.endswith('.jpg') and f.startswith('65')]
+    
+    if fotos_sma:
+        cols = st.columns(2)
+        for i, foto in enumerate(fotos_sma):
+            with cols[i % 2]:
+                # Mostramos las fotos en una cuadrícula. Puedes ajustar caption si quieres
+                st.image(foto, caption=f"SMA - Vista {i+1}", use_container_width=True)
+    else:
+        st.warning("No se encontraron fotos del SMA en la carpeta del proyecto.")
 
-# Link de WhatsApp directo
-whatsapp_url = "https://wa.me/59899417716?text=Hola%20Leo,%20estoy%20interesado%20en%20el%20Hyundai%20Accent%2095"
-
-# Botones de Acción
-st.markdown("---")
-st.markdown(f'<a href="{whatsapp_url}" target="_blank" class="btn-whatsapp">💬 SOLICITAR MÁS INFO</a>', unsafe_allow_html=True)
-st.markdown(f'<a href="{whatsapp_url}" target="_blank" class="btn-whatsapp">🔥 ¡ME INTERESA EL AUTO!</a>', unsafe_allow_html=True)
-
-# Pie de página
-st.markdown("---")
-st.markdown("<p style='text-align: center; color: #777;'>© 2026 Litoral Automotores - Paysandú</p>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; font-weight: bold;'>📞 Contacto: 099 417 716</p>", unsafe_allow_html=True)
+    # Características SMA
+    st.markdown("<div class='feature-list'>", unsafe_allow_html=True)
+    st.subheader("Características del Vehículo")
+    st.write("**Descripción:** Excelente oportunidad! Un sedán cómodo, espacioso y listo para rodar. Ideal para quienes buscan un vehículo confiable con un motor potente.")
+    st.write("✅ **Marca:** SMA")
+    st.write("✅ **Modelo:** C81 Full")
+    st.write("✅ **Año:** 2009")
+    st.write("✅
