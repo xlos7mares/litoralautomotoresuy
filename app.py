@@ -4,32 +4,31 @@ import os
 # 1. Configuración de la página
 st.set_page_config(page_title="Litoral Automotores", page_icon="🚗", layout="wide")
 
-# 2. LÓGICA DE IMÁGENES (Buscador automático en tu GitHub)
+# 2. LÓGICA DE IMÁGENES (Para que encuentre tus fotos en GitHub)
 archivos = sorted([f for f in os.listdir('.') if f.lower().endswith('.jpg')])
 f_sav = [f for f in archivos if 'savblack' in f.lower()]
 f_vit = [f for f in archivos if 'vitara' in f.lower()]
 f_sma = [f for f in archivos if f.startswith('657') or f.startswith('655') or f.startswith('65615')]
 f_hyu = [f for f in archivos if f.startswith('656') and f not in f_sma]
 
-# URLs de portadas (si no hay fotos, queda vacío)
+# URLs de portadas
 img_sav = f_sav[0] if f_sav else ""
 img_vit = f_vit[0] if f_vit else ""
 img_sma = f_sma[0] if f_sma else ""
 img_hyu = f_hyu[0] if f_hyu else ""
 
-# 3. TODO EL DISEÑO EN UN SOLO BLOQUE (Para evitar espacios blancos)
+# 3. TODO EL DISEÑO EN UNA VARIABLE (No toques nada de acá adentro)
 logo_url = "https://raw.githubusercontent.com/xlos7mares/litoralautomotoresuy/main/601396473_3654982237974663_5290087789832669203_n.jpg"
 
-diseno_html = f"""
+diseno_final = f"""
 <style>
     /* Eliminar márgenes de Streamlit */
     .block-container {{ padding: 0rem !important; margin: 0rem !important; }}
     footer {{visibility: hidden;}}
     header {{visibility: hidden;}}
 
-    .main-body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; min-height: 100vh; }}
+    .main-body {{ font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8f9fa; min-height: 100vh; }}
     
-    /* Encabezado Azul */
     .header-blue {{
         background-color: #1d3557;
         color: white;
@@ -42,10 +41,9 @@ diseno_html = f"""
         width: 180px; height: 180px; border-radius: 50%; border: 4px solid white; object-fit: cover; flex-shrink: 0;
     }}
     .header-text {{ margin-left: 35px; }}
-    .header-text h1 {{ font-size: 3.5em; margin: 0; line-height: 1; }}
+    .header-text h1 {{ font-size: 3.5em; margin: 0; line-height: 1; color: white !important; }}
     .header-text p {{ font-size: 1.2em; color: #a8dadc; margin-top: 10px; }}
 
-    /* Grilla de Ventas */
     .grid-autos {{
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -56,7 +54,7 @@ diseno_html = f"""
     .card {{
         background: white; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 20px; text-align: center;
     }}
-    .img-auto {{ width: 100%; border-radius: 10px; margin-bottom: 15px; height: 200px; object-fit: cover; }}
+    .img-auto {{ width: 100%; border-radius: 10px; margin-bottom: 15px; height: 220px; object-fit: cover; }}
     .precio {{ color: #e63946; font-size: 24px; font-weight: bold; margin: 10px 0; }}
     .badge {{ background: #28a745; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8em; font-weight: bold; }}
     
@@ -123,5 +121,5 @@ diseno_html = f"""
 </div>
 """
 
-# ESTA LÍNEA ES LA QUE ACTIVA TODO EL DISEÑO
-st.markdown(diseno_html, unsafe_allow_html=True)
+# ESTA ES LA LÍNEA QUE FALTABA PARA ACTIVAR EL DISEÑO
+st.markdown(diseno_final, unsafe_allow_html=True)
