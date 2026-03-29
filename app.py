@@ -4,122 +4,103 @@ import os
 # 1. Configuración de la página
 st.set_page_config(page_title="Litoral Automotores", page_icon="🚗", layout="wide")
 
-# 2. LÓGICA DE IMÁGENES (Para que encuentre tus fotos en GitHub)
-archivos = sorted([f for f in os.listdir('.') if f.lower().endswith('.jpg')])
-f_sav = [f for f in archivos if 'savblack' in f.lower()]
-f_vit = [f for f in archivos if 'vitara' in f.lower()]
-f_sma = [f for f in archivos if f.startswith('657') or f.startswith('655') or f.startswith('65615')]
-f_hyu = [f for f in archivos if f.startswith('656') and f not in f_sma]
+# 2. Lógica para encontrar tus fotos en GitHub
+archivos = [f for f in os.listdir('.') if f.lower().endswith('.jpg')]
+f_sav = next((f for f in archivos if 'savblack1' in f.lower()), "")
+f_vit = next((f for f in archivos if 'vitara' in f.lower()), "")
+f_sma = next((f for f in archivos if f.startswith('657') or f.startswith('655')), "")
+f_hyu = next((f for f in archivos if f.startswith('656') and '65615' not in f), "")
 
-# URLs de portadas
-img_sav = f_sav[0] if f_sav else ""
-img_vit = f_vit[0] if f_vit else ""
-img_sma = f_sma[0] if f_sma else ""
-img_hyu = f_hyu[0] if f_hyu else ""
-
-# 3. TODO EL DISEÑO EN UNA VARIABLE (No toques nada de acá adentro)
+# 3. El diseño (HTML y CSS)
 logo_url = "https://raw.githubusercontent.com/xlos7mares/litoralautomotoresuy/main/601396473_3654982237974663_5290087789832669203_n.jpg"
 
-diseno_final = f"""
+html_final = f"""
 <style>
-    /* Eliminar márgenes de Streamlit */
+    /* Forzar eliminación de márgenes */
     .block-container {{ padding: 0rem !important; margin: 0rem !important; }}
     footer {{visibility: hidden;}}
     header {{visibility: hidden;}}
 
-    .main-body {{ font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8f9fa; min-height: 100vh; }}
-    
-    .header-blue {{
+    .header-azul {{
         background-color: #1d3557;
         color: white;
-        padding: 40px 50px;
+        padding: 40px;
         display: flex;
         align-items: center;
         border-radius: 0 0 30px 30px;
+        margin-top: -50px;
     }}
     .logo-img {{
-        width: 180px; height: 180px; border-radius: 50%; border: 4px solid white; object-fit: cover; flex-shrink: 0;
+        width: 180px; height: 180px; border-radius: 50%; border: 4px solid white; object-fit: cover;
     }}
-    .header-text {{ margin-left: 35px; }}
-    .header-text h1 {{ font-size: 3.5em; margin: 0; line-height: 1; color: white !important; }}
-    .header-text p {{ font-size: 1.2em; color: #a8dadc; margin-top: 10px; }}
-
-    .grid-autos {{
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
-        padding: 30px;
-        margin-top: -30px;
-    }}
-    .card {{
-        background: white; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 20px; text-align: center;
-    }}
-    .img-auto {{ width: 100%; border-radius: 10px; margin-bottom: 15px; height: 220px; object-fit: cover; }}
-    .precio {{ color: #e63946; font-size: 24px; font-weight: bold; margin: 10px 0; }}
-    .badge {{ background: #28a745; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8em; font-weight: bold; }}
+    .header-texto {{ margin-left: 30px; font-family: sans-serif; }}
     
-    .btn {{
-        display: block; padding: 12px; margin: 8px 0; border-radius: 8px; text-decoration: none; font-weight: bold; color: white !important;
+    .grid-autos {{
+        display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; justify-content: center;
+        font-family: sans-serif;
     }}
-    .btn-blue {{ background-color: #007bff; }}
-    .btn-red {{ background-color: #dc3545; }}
+    .tarjeta {{
+        background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        padding: 20px; width: 300px; text-align: center;
+    }}
+    .img-car {{ width: 100%; border-radius: 10px; height: 200px; object-fit: cover; }}
+    .precio {{ color: #e63946; font-size: 24px; font-weight: bold; margin: 10px 0; }}
+    .btn {{
+        display: block; padding: 12px; margin: 5px 0; border-radius: 8px;
+        text-decoration: none; font-weight: bold; color: white !important;
+    }}
 </style>
 
-<div class="main-body">
-    <div class="header-blue">
-        <img src="{logo_url}" class="logo-img">
-        <div class="header-text">
-            <h1>LITORAL AUTOMOTORES</h1>
-            <p>Comercializamos vehículos de todas las décadas. Especialistas en gestionar <b>CONSIGNACIONES</b>.</p>
-            <p>Autos, Camionetas, Motos, Trailers y Casas Rodantes. ¡CONSÚLTENOS!</p>
-        </div>
+<div class="header-azul">
+    <img src="{logo_url}" class="logo-img">
+    <div class="header-texto">
+        <h1 style="margin:0; font-size: 3em;">LITORAL AUTOMOTORES</h1>
+        <p style="margin:5px 0; color: #a8dadc;">Expertos en <b>CONSIGNACIONES</b>. Paysandú, Uruguay.</p>
+    </div>
+</div>
+
+<div class="grid-autos">
+    <div class="tarjeta">
+        <b style="color: #28a745;">EN VENTA</b>
+        <h3>VW Saveiro (2011)</h3>
+        <img src="{f_sav}" class="img-car">
+        <div class="precio">USD 8.000</div>
+        <p>Motor 1.6 | Cabina Extendida</p>
+        <a href="https://wa.me/59899417716?text=Saveiro" class="btn" style="background:#007bff;">CONSULTAR</a>
+        <a href="https://wa.me/59899417716?text=Saveiro" class="btn" style="background:#dc3545;">ME INTERESA</a>
     </div>
 
-    <div class="grid-autos">
-        <div class="card">
-            <span class="badge">EN VENTA!</span>
-            <h3>VW Saveiro C.E (2011)</h3>
-            <img src="{img_sav}" class="img-auto">
-            <div class="precio">USD 8.000</div>
-            <p>• Motor 1.6 Nafta<br>• 230k km originales</p>
-            <a href="https://wa.me/59899417716?text=Saveiro" class="btn btn-blue">💬 CONSULTAR</a>
-            <a href="https://wa.me/59899417716?text=Saveiro" class="btn btn-red">🔥 LO QUIERO</a>
-        </div>
-
-        <div class="card">
-            <span class="badge">EN VENTA!</span>
-            <h3>Suzuki Vitara GL (2016)</h3>
-            <img src="{img_vit}" class="img-auto">
-            <div class="precio">USD 14.800</div>
-            <p>• 150k km | Servicio al día<br>• Muy sana, sin detalles</p>
-            <a href="https://wa.me/59899417716?text=Vitara" class="btn btn-blue">💬 CONSULTAR</a>
-            <a href="https://wa.me/59899417716?text=Vitara" class="btn btn-red">🔥 LO QUIERO</a>
-        </div>
-
-        <div class="card">
-            <span class="badge">EN VENTA!</span>
-            <h3>SMA C81 Full (2009)</h3>
-            <img src="{img_sma}" class="img-auto">
-            <div class="precio">USD 3.500</div>
-            <p>• Motor 1.8 Nafta Inyección<br>• Versión Full equipada</p>
-            <a href="https://wa.me/59899417716?text=SMA" class="btn btn-blue">💬 CONSULTAR</a>
-            <a href="https://wa.me/59899417716?text=SMA" class="btn btn-red">🔥 LO QUIERO</a>
-        </div>
-
-        <div class="card">
-            <span class="badge">EN VENTA!</span>
-            <h3>Hyundai Accent (1995)</h3>
-            <img src="{img_hyu}" class="img-auto">
-            <div class="precio">¡CONSULTE!</div>
-            <p>• Motor 1.5 Nafta<br>• Documentación al día</p>
-            <a href="https://wa.me/59899417716?text=Hyundai" class="btn btn-blue">💬 CONSULTAR</a>
-            <a href="https://wa.me/59899417716?text=Hyundai" class="btn btn-red">🔥 LO QUIERO</a>
-        </div>
+    <div class="tarjeta">
+        <b style="color: #28a745;">EN VENTA</b>
+        <h3>Suzuki Vitara (2016)</h3>
+        <img src="{f_vit}" class="img-car">
+        <div class="precio">USD 14.800</div>
+        <p>150k km | Impecable estado</p>
+        <a href="https://wa.me/59899417716?text=Vitara" class="btn" style="background:#007bff;">CONSULTAR</a>
+        <a href="https://wa.me/59899417716?text=Vitara" class="btn" style="background:#dc3545;">ME INTERESA</a>
     </div>
-    
-    <p style="text-align: center; color: gray; padding: 20px;">© 2026 Litoral Automotores | Paysandú, Uruguay</p>
+
+    <div class="tarjeta">
+        <b style="color: #28a745;">EN VENTA</b>
+        <h3>SMA C81 (2009)</h3>
+        <img src="{f_sma}" class="img-car">
+        <div class="precio">USD 3.500</div>
+        <p>Motor 1.8 | Full Full</p>
+        <a href="https://wa.me/59899417716?text=SMA" class="btn" style="background:#007bff;">CONSULTAR</a>
+        <a href="https://wa.me/59899417716?text=SMA" class="btn" style="background:#dc3545;">ME INTERESA</a>
+    </div>
+
+    <div class="tarjeta">
+        <b style="color: #28a745;">EN VENTA</b>
+        <h3>Hyundai Accent (95)</h3>
+        <img src="{f_hyu}" class="img-car">
+        <div class="precio">¡CONSULTE!</div>
+        <p>Muy económico | Al día</p>
+        <a href="https://wa.me/59899417716?text=Hyundai" class="btn" style="background:#007bff;">CONSULTAR</a>
+        <a href="https://wa.me/59899417716?text=Hyundai" class="btn" style="background:#dc3545;">ME INTERESA</a>
+    </div>
 </div>
 """
 
-# ESTA ES LA LÍNEA QUE FALTABA PARA ACTIVAR EL DISEÑO
-st.markdown(diseno_final, unsafe_allow_html=True)
+# ESTA ES LA ÚNICA FORMA DE QUE SE VEA EL DISEÑO
+st.write(html_final, unsafe_allow_html=True)
