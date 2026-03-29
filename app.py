@@ -3,33 +3,35 @@ import streamlit as st
 # 1. Configuración de la página
 st.set_page_config(page_title="Litoral Automotores", page_icon="🚗", layout="wide")
 
-# 2. CSS y ENCABEZADO
-st.markdown("""
+# 2. Definición del Contenido HTML Completo
+html_contenido = """
+<!DOCTYPE html>
+<html>
+<head>
 <style>
-    .block-container { padding: 0rem !important; }
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
+    body { font-family: sans-serif; background-color: #f8f9fa; margin: 0; padding: 0; }
     .header-azul {
         background-color: #1d3557; color: white; padding: 40px;
-        display: flex; align-items: center; border-radius: 0 0 30px 30px; margin-top: -50px;
+        display: flex; align-items: center; border-radius: 0 0 30px 30px;
     }
     .logo-img { width: 180px; height: 180px; border-radius: 50%; border: 4px solid white; object-fit: cover; }
-    .header-texto { margin-left: 30px; font-family: sans-serif; }
+    .header-texto { margin-left: 30px; }
     .grid-autos {
         display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; justify-content: center;
-        font-family: sans-serif;
     }
     .tarjeta {
         background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        padding: 20px; width: 300px; text-align: center;
+        padding: 20px; width: 280px; text-align: center;
     }
-    .img-car { width: 100%; border-radius: 10px; height: 200px; object-fit: cover; }
+    .img-car { width: 100%; border-radius: 10px; height: 180px; object-fit: cover; }
     .precio { color: #e63946; font-size: 24px; font-weight: bold; margin: 10px 0; }
     .btn {
         display: block; padding: 12px; margin: 5px 0; border-radius: 8px;
-        text-decoration: none; font-weight: bold; color: white !important;
+        text-decoration: none; font-weight: bold; color: white !important; text-align: center;
     }
 </style>
+</head>
+<body>
 
 <div class="header-azul">
     <img src="https://raw.githubusercontent.com/xlos7mares/litoralautomotoresuy/main/601396473_3654982237974663_5290087789832669203_n.jpg" class="logo-img">
@@ -38,10 +40,7 @@ st.markdown("""
         <p style="margin:5px 0; color: #a8dadc; font-size: 1.2em;">Expertos en <b>CONSIGNACIONES</b>. Paysandú, Uruguay.</p>
     </div>
 </div>
-""", unsafe_allow_html=True)
 
-# 3. EL CATÁLOGO (CÓDIGO PURO)
-st.markdown("""
 <div class="grid-autos">
     <div class="tarjeta">
         <b style="color: #28a745;">EN VENTA</b>
@@ -83,6 +82,10 @@ st.markdown("""
         <a href="https://wa.me/59899417716?text=Interes-Hyundai" class="btn" style="background:#dc3545;">ME INTERESA</a>
     </div>
 </div>
-""", unsafe_allow_html=True)
 
-st.markdown("<p style='text-align: center; color: gray; font-family: sans-serif;'>© 2026 Litoral Automotores</p>", unsafe_allow_html=True)
+</body>
+</html>
+"""
+
+# 3. LANZAMIENTO DEL COMPONENTE (ESTO NO FALLA)
+st.components.v1.html(html_contenido, height=1200, scrolling=True)
