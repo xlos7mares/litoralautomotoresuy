@@ -4,59 +4,62 @@ import os
 # 1. Configuración de la página
 st.set_page_config(page_title="Litoral Automotores - Catálogo", page_icon="🚗", layout="wide")
 
-# 2. CSS DE CONTROL TOTAL
+# 2. CSS PARA CONTROL TOTAL DE ESPACIOS
 st.markdown("""
     <style>
-    /* Eliminar todos los márgenes internos de Streamlit */
+    /* Eliminar los márgenes internos de Streamlit que causan el espacio blanco */
     .block-container {
-        padding-top: 0rem !important;
+        padding-top: 1rem !important;
         padding-bottom: 0rem !important;
-        margin-top: -45px !important;
     }
     
     .stApp { background-color: #f8f9fa; }
 
-    /* Contenedor del encabezado */
+    /* Contenedor del encabezado Azul */
     .header-box {
         background-color: #1d3557;
         color: white;
         padding: 30px;
         border-radius: 0px 0px 25px 25px;
-        margin-bottom: 10px !important;
+        margin-top: -60px !important; /* Elimina el espacio superior del navegador */
+        margin-bottom: 20px !important;
     }
 
-    /* Tabla para alinear logo y texto sin errores */
-    .header-table {
-        width: 100%;
-        border-collapse: collapse;
+    /* Estructura para alinear logo y texto sin que se corten */
+    .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        max-width: 1200px;
+        margin: 0 auto;
     }
-    .logo-cell {
-        width: 220px;
-        text-align: center;
-        vertical-align: middle;
-    }
-    .logo-cell img {
-        width: 200px;
-        height: 200px;
+
+    .logo-img {
+        width: 180px;
+        height: 180px;
         border-radius: 50%;
         border: 4px solid white;
         object-fit: cover;
+        flex-shrink: 0;
     }
-    .text-cell {
-        padding-left: 40px;
-        vertical-align: middle;
-        text-align: left;
+
+    .text-area {
+        margin-left: 30px;
     }
-    .text-cell h1 {
+
+    .text-area h1 {
         font-family: 'Arial Black', sans-serif;
-        font-size: 3.5em;
+        font-size: 3.2em;
         margin: 0;
         color: white !important;
+        line-height: 1;
     }
-    .text-cell p {
-        font-size: 1.3em;
+
+    .text-area p {
+        font-size: 1.2em;
         color: #a8dadc;
         margin: 10px 0 0 0;
+        line-height: 1.4;
     }
 
     /* Tarjetas de autos */
@@ -67,6 +70,7 @@ st.markdown("""
         box-shadow: 0px 8px 20px rgba(0,0,0,0.1); 
         text-align: center;
         min-height: 750px;
+        margin-bottom: 20px;
     }
     
     .badge-venta { background-color: #28a745; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; }
@@ -77,7 +81,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- NAVEGACIÓN ZOOM ---
+# --- NAVEGACIÓN ZOOM (Mantenida sin cambios) ---
 if "foto" in st.query_params:
     if st.button("⬅️ VOLVER AL CATÁLOGO"):
         st.query_params.clear()
@@ -85,27 +89,23 @@ if "foto" in st.query_params:
     st.image(st.query_params["foto"], use_container_width=True)
     st.stop()
 
-# --- ENCABEZADO CON TABLA HTML (No falla) ---
+# --- ENCABEZADO HTML (Diseño Robusto) ---
 logo_url = "https://raw.githubusercontent.com/xlos7mares/litoralautomotoresuy/main/601396473_3654982237974663_5290087789832669203_n.jpg"
 
 st.markdown(f"""
     <div class="header-box">
-        <table class="header-table">
-            <tr>
-                <td class="logo-cell">
-                    <img src="{logo_url}">
-                </td>
-                <td class="text-cell">
-                    <h1>LITORAL AUTOMOTORES</h1>
-                    <p>Comercializamos vehículos de todas las décadas. Especialistas en gestionar <b>CONSIGNACIONES</b> con total transparencia.</p>
-                    <p>Autos, Camionetas, Motos, Trailers y Casas Rodantes. ¡CONSÚLTENOS!</p>
-                </td>
-            </tr>
-        </table>
+        <div class="header-content">
+            <img src="{logo_url}" class="logo-img">
+            <div class="text-area">
+                <h1>LITORAL AUTOMOTORES</h1>
+                <p>Comercializamos vehículos de todas las décadas. Especialistas en gestionar <b>CONSIGNACIONES</b> con total transparencia.</p>
+                <p>Autos, Camionetas, Motos, Trailers y Casas Rodantes. ¡CONSÚLTENOS!</p>
+            </div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
-# --- LÓGICA DE FOTOS ---
+# --- LÓGICA DE FOTOS (Mantenida sin cambios) ---
 archivos = sorted([f for f in os.listdir('.') if f.lower().endswith('.jpg')])
 f_saveiro = [f for f in archivos if 'savblack' in f.lower()]
 f_vitara = [f for f in archivos if 'vitara' in f.lower()]
@@ -126,7 +126,7 @@ def tarjeta(titulo, precio, desc, fotos, msg):
     st.markdown(f'<a href="{u}" target="_blank" class="btn-ws btn-interesa">🔥 LO QUIERO</a>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# --- GRILLA ---
+# --- CATÁLOGO ---
 col1, col2, col3, col4 = st.columns(4)
 with col1: tarjeta("VW Saveiro C.E (2011)", "USD 8.000", ["Motor 1.6 Nafta", "230k km originales"], f_saveiro, "Saveiro")
 with col2: tarjeta("Suzuki Vitara GL (2016)", "USD 14.800", ["150k km", "Servicio al día"], f_vitara, "Vitara")
