@@ -4,19 +4,27 @@ import os
 # 1. Configuración de la página
 st.set_page_config(page_title="Litoral Automotores - Catálogo", page_icon="🚗", layout="wide")
 
-# 2. Estilos CSS (Sin espacios blancos, logo redondo y diseño profesional)
+# 2. Estilos CSS (Banner de Ayrton Senna y diseño de tarjetas)
 st.markdown("""
     <style>
-    .block-container { padding-top: 1rem !important; }
+    /* Eliminar espacios blancos superiores */
+    .block-container { padding-top: 0rem !important; padding-bottom: 1rem !important; }
     .stApp { background-color: #f8f9fa; }
     
-    .header-box { 
-        background-color: #1d3557; color: white; padding: 30px; 
-        border-radius: 0px 0px 25px 25px; margin-top: -60px !important; 
-        margin-bottom: 20px; text-align: center;
+    /* Contenedor del Banner de Ayrton Senna */
+    .banner-container {
+        width: 100%;
+        margin-top: -60px !important; /* Ajuste para eliminar margen de Streamlit */
+        margin-bottom: 25px;
     }
-    .header-logo { width: 180px; height: 180px; border-radius: 50%; border: 4px solid white; object-fit: cover; }
+    .banner-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-bottom: 5px solid #ffc107; /* Un toque dorado como el casco de Senna */
+    }
     
+    /* Diseño de Tarjetas de Vehículos */
     .car-card { 
         background: white; padding: 20px; border-radius: 15px; 
         box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 25px; 
@@ -50,16 +58,11 @@ if "foto" in st.query_params:
     st.image(foto_full, use_container_width=True)
     st.stop()
 
-# 4. Encabezado Profesional
+# 4. BANNER SUPERIOR DE AYRTON SENNA (Reemplaza el encabezado azul)
+banner_url = "https://raw.githubusercontent.com/xlos7mares/litoralautomotoresuy/main/fondolitoralautomotores.png"
 st.markdown(f"""
-    <div class="header-box">
-        <img src="https://raw.githubusercontent.com/xlos7mares/litoralautomotoresuy/main/601396473_3654982237974663_5290087789832669203_n.jpg" class="header-logo">
-        <h1 style="margin:0; font-size: 2.8em;">LITORAL AUTOMOTORES</h1>
-        <p style="font-size:1.2em; margin-top:10px;">
-            RECIBIMOS Y COMERCIALIZAMOS TODO TIPO DE VEHÍCULOS DE TODAS LAS DÉCADAS.<br>
-            Especialistas en gestionar <b>CONSIGNACIONES</b> con total transparencia y seguridad.<br>
-            <b>ASESOR DE SEGUROS SAN CRISTÓBAL</b> - ¡Consulte su cotización!
-        </p>
+    <div class="banner-container">
+        <img src="{banner_url}" class="banner-img">
     </div>
     """, unsafe_allow_html=True)
 
@@ -90,7 +93,6 @@ def mostrar_unidad(titulo, precio, detalles, prefijo, patente_cuota, patente_tot
         
         st.markdown(f'<div class="price">{precio}</div>', unsafe_allow_html=True)
         
-        # --- BLOQUE DE IMPUESTOS Y SEGURO ---
         st.markdown(f"""
             <div class="info-seguro">
                 <b>🛡️ SEGURO SAN CRISTÓBAL:</b><br>
